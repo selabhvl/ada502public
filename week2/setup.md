@@ -1,12 +1,11 @@
-# Installation Instructions
+# Week 2 - Installation of Software Development Environment
 
-In this course, we will be chiefly using 
+In this course, we will be chiefly be using 
 
-- the distributed version control system (VCS) [git](https://git-scm.com/) to share code and collaborate, 
+- the distributed version control system (VCS) [git](https://git-scm.com/) to share code and to collaborate on coding, 
 - the [Python](https://www.python.org/) programming language, and
 - the container virtualization software [Docker](https://www.docker.com/).
 
-The installation instructions details are given below.
 Moreover, we highly recommend installing tools for working with the above:
 
 - An integrated development environment (e.g. [JetBrains PyCharm](https://www.jetbrains.com/pycharm/)) or editor (e.g. [Visual Studio Code](https://code.visualstudio.com/), [NeoVim](https://neovim.io/)) that 
@@ -53,7 +52,7 @@ to check whether git is installed correctly and what version you have (=> it sho
 
 ## Python 
 
-You will both have to install the Python interpreter itself, as well as the Python package manager [Poetry](https://python-poetry.org/)
+You will have to install both the Python interpreter itself, as well as the Python package manager [Poetry](https://python-poetry.org/)
 
 ### Windows
 
@@ -123,7 +122,7 @@ curl -sSL https://install.python-poetry.org | python3 -
 
 ## Docker
 
-For the Docker installatio, we refer to the official documentation:
+For the Docker installation, we refer to the official documentation:
 
 - [Windws](https://docs.docker.com/desktop/install/windows-install/)
 - [Max OS X](https://docs.docker.com/desktop/install/mac-install/)
