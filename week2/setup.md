@@ -16,6 +16,7 @@ has matching capabilities (syntax highlighting, language server, debugger etc.)
 
 We also expect you to have a [GitHub](https://github.com/) account!
 
+When installing the above tools do a basic check that you installation works. If you encounted problems do not hesitate to use the ADA502 Discord server (see Canvas) to describedthe problem and receive help resolving it. You are also encounarged to help other solving any installation problems they may encounter.
 ## Git
 
 ### Windows 
