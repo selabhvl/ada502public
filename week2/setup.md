@@ -3,10 +3,11 @@
 In this course, we will be chiefly be using 
 
 - the distributed version control system (VCS) [git](https://git-scm.com/) to share code and to collaborate on coding, 
-- the [Python](https://www.python.org/) programming language, and
+- the [Python](https://www.python.org/) programming language, 
+- the [Poetry](https://python-poetry.org/) Python package manager, and
 - the container virtualization software [Docker](https://www.docker.com/).
 
-Moreover, we highly recommend installing tools for working with the above:
+Moreover, we highly recommend installing tools for working with the above
 
 - An integrated development environment (e.g. [JetBrains PyCharm](https://www.jetbrains.com/pycharm/)) or editor (e.g. [Visual Studio Code](https://code.visualstudio.com/), [NeoVim](https://neovim.io/)) that 
 has matching capabilities (syntax highlighting, language server, debugger etc.)
