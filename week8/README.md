@@ -4,7 +4,7 @@
 - Refactor the dynamic-frcm using FastAPI to provide REST API endpoints (public and private)
 - Integrate keycloak API for consuming JWT auth/authz token
 - Configure keycloak as the 3rd party Identity Provider
-- Set up CI environment
+- Set up CI/CD environment
 - Test, test, test
 
 ## Example project for Auth/Authz using JWT for FastAPI RESTAPI and Keycloak IdP 
