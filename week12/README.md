@@ -3,7 +3,7 @@
 ## Friday Lab tasks: Individual/Group work 08-10, Follow-up & Discussions 10-12
 
 ## Task 1 (Static Analysis)
-- Install [SonarLint](`https://plugins.jetbrains.com/plugin/7973-sonarlint`) in your PyCharm IDE 
+- Install [SonarLint](https://plugins.jetbrains.com/plugin/7973-sonarlint) in your PyCharm IDE 
 - Run SonarLint on your python project (e.g., dynamic-frcm)
 - Select 10 quality issues identified by SonarLint
 - Investigate how to fix these issues (Determine if the issue is also a false positive)
