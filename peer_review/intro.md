@@ -20,31 +20,31 @@ But feel free to add additional aspects and topics that you would like to give f
 
 ### Source Code Management
 
-[ ] Are all components of the fire risk system under version control?
-[ ] What repository layout is used: Mono- or Poly-repo?
-    [ ] for poly-repo: is there an overarching document (e.g. Readme) that describes how the repositories belong together? other means such as `git submodules`? 
-    [ ] for mono-repo: is the internal repository structure well-documented?
-[ ] What workflow is used in the repo? Trunk-based vs. Github-flow vs. Git-flow? Does commit-messages refer to feature/bug-tickets? Are tags or branches used to idenity features or stable versions?
+- [ ] Are all components of the fire risk system under version control?
+- [ ] What repository layout is used: Mono- or Poly-repo?
+    - [ ] for poly-repo: is there an overarching document (e.g. Readme) that describes how the repositories belong together? other means such as `git submodules`? 
+    - [ ] for mono-repo: is the internal repository structure well-documented?
+- [ ] What workflow is used in the repo? Trunk-based vs. Github-flow vs. Git-flow? Does commit-messages refer to feature/bug-tickets? Are tags or branches used to idenity features or stable versions?
 
 ### Continuous Integration and Deployment
 
-[ ] Are there test cases for the most central functionality?
-[ ] Are there CI-pipelines for each component that run the tests automatically?
-[ ] Are there Dockerfiles for each component that create container images?
-[ ] Do the CI-pipelines contain a step for building the Docker image and additionally pushing it to a container registry?
+- [ ] Are there test cases for the most central functionality?
+- [ ] Are there CI-pipelines for each component that run the tests automatically?
+- [ ] Are there Dockerfiles for each component that create container images?
+- [ ] Do the CI-pipelines contain a step for building the Docker image and additionally pushing it to a container registry?
 
 ### Functionality 
 
-[ ] Does the system comprise a component to automatically fetch weather data from MET?
-[ ] Does the system offer a REST API for retrieving the fire risk at a given location?
-[ ] Does the system comprise the fire risk model from the `frcm` project?
-[ ] Is there functionality that automatically observes the fire risk at given location (i.e. fetches wather data in the background and updates the fire risk continuously)?
-[ ] Perform a system test of all components together: i.e. "Does it work?"
+- [ ] Does the system comprise a component to automatically fetch weather data from MET?
+- [ ] Does the system offer a REST API for retrieving the fire risk at a given location?
+- [ ] Does the system comprise the fire risk model from the `frcm` project?
+- [ ] Is there functionality that automatically observes the fire risk at given location (i.e. fetches wather data in the background and updates the fire risk continuously)?
+- [ ] Perform a system test of all components together: i.e. "Does it work?"
 
 ### Non-functional requirements
 
-[ ] Does the system use messaging for the communication of two or more components?
-[ ] Does the system store some information (at least historical wather data) persistently? What type of storage is used (file/bock storage vs. object storage vs. database: relational vs. non-relational)? 
-[ ] Is information encrypted in-transfer and/or at-rest? How?
-[ ] Is authentication and authorization implemented for specific system functionality? How?
+- [ ] Does the system use messaging for the communication of two or more components?
+- [ ] Does the system store some information (at least historical wather data) persistently? What type of storage is used (file/bock storage vs. object storage vs. database: relational vs. non-relational)? 
+- [ ] Is information encrypted in-transfer and/or at-rest? How?
+- [ ] Is authentication and authorization implemented for specific system functionality? How?
 
