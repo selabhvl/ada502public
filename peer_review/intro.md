@@ -1,7 +1,7 @@
 # Project Peer Review
 
 As part of the third sprint, you shall additionally review the fire-risk project of another group.
-The review assignments between the groups are posted on Canvas.
+The review assignments between the groups [are posted on Canvas](https://hvl.instructure.com/courses/25065/assignments/76727).
 Your task is to retrieve to latest stable code snapshot from your assigned group 
 (either by cloning it locallay and/or forking their repository) and try following 
 their `README` description on how to make the system running.
