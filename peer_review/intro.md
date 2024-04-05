@@ -39,12 +39,12 @@ But feel free to add additional aspects and topics that you would like to give f
 [ ] Does the system offer a REST API for retrieving the fire risk at a given location?
 [ ] Does the system comprise the fire risk model from the `frcm` project?
 [ ] Is there functionality that automatically observes the fire risk at given location (i.e. fetches wather data in the background and updates the fire risk continuously)?
-[ ] Perform a system test of all components together 
+[ ] Perform a system test of all components together: i.e. "Does it work?"
 
 ### Non-functional requirements
 
 [ ] Does the system use messaging for the communication of two or more components?
-[ ] Does the system store some information (at least historical wather data) persistently? What type of storage is used (file/bock storage vs. object storage vs. database: relational vs. non-relational)? Is it an appropriate way of storing this kind of information in terms of i) storage effiency ii) ease of retrieval iii) data consistency iv) disaster recovery capabilities?
+[ ] Does the system store some information (at least historical wather data) persistently? What type of storage is used (file/bock storage vs. object storage vs. database: relational vs. non-relational)? 
 [ ] Is information encrypted in-transfer and/or at-rest? How?
 [ ] Is authentication and authorization implemented for specific system functionality? How?
 
