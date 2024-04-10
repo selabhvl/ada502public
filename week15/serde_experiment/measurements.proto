@@ -1,0 +1,23 @@
+syntax = "proto2";
+
+package serde_experiment;
+
+message Coordinates {
+    required double latitude = 1;
+    required double longitude = 2;
+}
+
+message Measurement {
+    required string id = 1;
+    required int64 timestamp = 2;
+    optional Coordinates coordinates = 3;
+    oneof value {
+        double value_float = 4;
+        int64 value_int = 5;
+    }
+    required string unit = 6;
+}
+
+message MeasurementList {
+    repeated Measurement measurements = 1;
+}
