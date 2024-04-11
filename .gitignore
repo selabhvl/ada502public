@@ -1,0 +1,5 @@
+__pycache__
+.ipynb_checkpoints
+.venv
+.env
+week15/serde_experiment/measurements_pb2.py
