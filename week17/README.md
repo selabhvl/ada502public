@@ -1,5 +1,11 @@
 # Week 17: Cloud Deployment Experiment
 
+For the final stage of the project we will provide the oppertunity to deploy you fire firsk application 
+in a Azure Kubernetes Cluster. The cluster was created as part of the lecture on _Infrastructure as Code (IaC)_
+in week 17. You may want to take a look at the [Terraform Code](https://github.com/selabhvl/ada502public/tree/main/week17/tf), which describes how it is provisioned.
+
+Below, you will find a description on how to get your applications into the cluster.
+
 ## Creating a Certificate for the Service Principal login
 
 _Certificate-based Authentication (CBA)_ for service principals in Azure is based on X.509 certificates.
@@ -94,6 +100,10 @@ Now, you should be able to log into the provided container registry with:
 ```sh
 az acr login -n {{acr_name}}.azurecr.io
 ```
+where 
+
+> `acr_name=experimentacr`
+
 Note that the value of `acr_name` has been determined after creating that particular resource in the lecture using Terraform.
 
 This means that you can use `docker push` to upload images to the container registry. To log out, just call `docker logout`.
@@ -102,7 +112,11 @@ To retrieve the AKS login credentials, you initially have to call:
 ```sh
 az aks get-credentials -n {{cluster_name}} -g {{resource_group}} --file /path/to/kube_config
 ```
-**Note** that the values of `cluster_name` and `resource_group` are determined in the lecture. 
+where 
+> `resource_group=experiment-rg`
+
+> `cluster_name=experiment-k8s`
+
 We are using the `--file` parameter here to download the `kube_config`-file to a given location to keep it 
 isolated from potential cluster credentials that you are already working with.
 Otherwise, the file would have been stord in `$HOME/.kube/`.
