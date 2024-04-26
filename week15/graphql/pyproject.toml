@@ -8,6 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 strawberry-graphql = {extras = ["debug-server"], version = "^0.224.1"}
+fastapi = "^0.110.1"
+uvicorn = {extras = ["all"], version = "^0.29.0"}
 
 
 [build-system]
