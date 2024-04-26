@@ -73,8 +73,21 @@ When you then call:
 az account show
 ```
 you should see something like:
-```
-TODO
+```json
+{
+  "environmentName": "AzureCloud",
+  "homeTenantId": "0a1d7995-b734-4d29-8b90-ba9a075bdd6d", 
+  "id": "bcb6368c-c036-4f3a-a10e-d07635e32e01",
+  "isDefault": true,
+  "managedByTenants": [],
+  "name": "Azure subscription 1",
+  "state": "Enabled",
+  "tenantId": "0a1d7995-b734-4d29-8b90-ba9a075bdd6d",
+  "user": {
+    "name": "YOUR_SERVICE_PRINCIPAL_OBJECT_UUID",
+    "type": "servicePrincipal"
+  }
+}
 ```
 
 Now, you should be able to log into the provided container registry with:
@@ -134,3 +147,6 @@ docker push {{acr_name}}.azcurecr.io/{{app_name}}:{{tag_name}}
 
 Afterwards, you may use `kubectl` to define as many `deployments`, `statefulsets`, `services`, `configmaps`, and `secrets`
 as you like to get your app running.
+
+Have a look into [test-app.k8s.yml](./test-app.k8s.yml) and [test-app-srv.k8s.yml](./test-app-srv.k8s.yml) for 
+a minimal example of a deployment and a service.
