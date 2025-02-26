@@ -1,6 +1,6 @@
 # REST API Security with JWT and Keycloak
 
-## Lab tasks (Friday 08-10/11)
+## Lab tasks (Friday 09-10/11)
 - Provide REST API endpoints (public and private)
 - Setup Keycloak IdP
 - Setup clients, users, roles, and client scopes on Keycloak
