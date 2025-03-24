@@ -1,7 +1,6 @@
 # Reliability and Code Quality
 
-## Friday Lab tasks: Individual/Group work 08-10, Follow-up & Discussions 10-12
-
+## Friday Lab tasks: Individual/Group work 09-11
 ## Task 1 (Static Analysis)
 - Install [SonarLint](https://plugins.jetbrains.com/plugin/7973-sonarlint) in your PyCharm IDE 
 - Run SonarLint on your python project (e.g., dynamic-frcm)
@@ -13,10 +12,10 @@
 - Build and run the web app docker image
   ```
   docker build -t vulnapp .
-  docker run -p 8080:8080 vulnapp
+  docker run -p 9095:9095 vulnapp
   
   ```
-- Load the web app at: `http://localhost:8080`
+- Load the web app at: `http://localhost:9095`
 - Manually perform the vulnerability tests specified on the Canvas page
 - Discuss what the vulnerabilities mean and their implications
 
