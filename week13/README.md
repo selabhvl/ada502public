@@ -34,4 +34,3 @@
   docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
   ```
 - Check that you can login to SonarQube at ```http://localhost:9000``` (username=admin, password=admin)
-- We'll revisit SonarQube in the discussion part on Friday.
