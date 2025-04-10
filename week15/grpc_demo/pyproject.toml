@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "graphql"
+name = "grpc-demo"
 version = "0.1.0"
 description = ""
 authors = ["Patrick Stünkel <webminz@googlemail.com>"]
@@ -7,11 +7,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-strawberry-graphql = {extras = ["debug-server"], version = "^0.224.1"}
-fastapi = {extras = ["standard"], version = "^0.115.12"}
-uvicorn = {extras = ["all"], version = "^0.29.0"}
+grpcio-tools = "^1.71.0"
+grpcio = "^1.71.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+#[tool.poetry.scripts]
+#codegen = "python -m grpc_tools.protoc -I./protos --python_out=grpc_demo --grpc_python_out=grpc_demo --pyi_out=grpc_demo protos/schema.proto"

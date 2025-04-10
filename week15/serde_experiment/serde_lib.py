@@ -79,9 +79,11 @@ class Wire:
 
     def transmit(self):
         delay = self.length * 8 / (5 * 1000 * 1000) # delay in seconds
-        print(f"Transmitting {self.length} bytes with 5 Mbit/s: {delay * 1000}ms network delay")
+        print(f"Transmitting {self.length} bytes with 5 Mbit/s...")
         self.buffer.seek(0)
+        # comment out the following line if you do not want to wait that long...
         sleep(delay)
+        print(f"...done  ({delay * 1000}ms network delay)")
 #
 
 def naive_json_serialization(m: Measurement, w: Wire) -> None:
