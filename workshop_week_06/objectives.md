@@ -24,18 +24,27 @@ such as moving around in the file system, moving files around, and so on. If you
 
 ## Connecting to Nrec
 
-Each group already has it's own virtual machine in the project `hv-ada502-spring2026`.
-Log into the dashboard and see if you can identify your group's `instance`.
+At the end of today, each group should have it's own virtual machine in the project `hvl-ada502-spring2026`,
+hence, the following steps shall be undertaken **per group**, i.e. only one in your group has to do the following:
 
-Now, follow the [documentation guide](https://docs.nrec.no/create-linux-machine.html#id4) from "Allowing SSH and ICMP access" 
-(since the machines are already created) 
-to learn how you can connect to the virtual machine from your own computer using SSH. 
-You may want to read more on [SSH](https://docs.nrec.no/ssh.html) and [Network Security Groups](https://docs.nrec.no/security-groups.html)
-while doing this.
+Read and follow the [documentation guide](https://docs.nrec.no/create-linux-machine.html) to learn how to create 
+a virtual machine in Nrec and connect to it via SSH.
+Use the following parameters when creating the instance:
+- `Instance Name` -> use a name reflecting your group number, e.g. "fireguard-group-01".
+- `Boot Source` -> select yould favourite Linux images, if you have no prior experience with Linux, choose `GOLD Ubuntu 24.04 LTS`.
+- `Flavor/Size` -> select `c1.large`.
+- `Network` -> select `dual stack`.
+- `Security Groups` -> Keep the `default` network security group in the first place (you can add more later).
+- `Key Pair` -> create a key pair on you local machine with `ssh-keygen` and then upload the _public key_ with "Import Key Pair".
+- keep the remaining options as is and click on "Launch Instance".
+
+You may also want to read more on [SSH](https://docs.nrec.no/ssh.html) and [Network Security Groups](https://docs.nrec.no/security-groups.html).
 
 **Bonus** Once you made it into the machine, you may want [to add additional users for your group members](https://documentation.ubuntu.com/server/how-to/security/user-management/#listing-adding-and-deleting-local-users)
 and then disabling [login for the root account](https://documentation.ubuntu.com/server/how-to/security/user-management/#disabling-the-root-account-password).
-Make sure that you add your public SSH certificates for the newly created users.
+Make sure that you add your public SSH certificates for the newly created users by adding the public keys in 
+the `~/.ssh/authorized_keys` file (where `~` refers to the home directory of the user, ususally `/home/<username>`.
+The home directory of the `root` user is `/root`).
 
 
 ## Serving static content 
