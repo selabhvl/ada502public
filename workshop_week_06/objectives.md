@@ -20,7 +20,9 @@ Also, be warned: This workshop (and cloud computing in general) will often requi
 on the command line, often you work with Linux systems. If you have only ever used Windows and have not touched 
 the command line (e.g. PowerShell) much, it is advisable to learn [some basics](https://www.terminaltutor.com/)
 such as moving around in the file system, moving files around, and so on. If you know what the following commands do, you are good:
-`cd`, `pwd`, `ls`, `mv`, `cp`, `rm`, `mkdir`, `touch`.
+`cd`, `pwd`, `ls`, `mv`, `cp`, `rm`, `mkdir`, `touch`. 
+
+Also, using a command line editor such as `nano`, or `vim`/`vi` (important: you [exit vi](https://thenewstack.io/how-do-you-exit-vim-a-newbie-question-turned-tech-meme/) by writing `:q`)
 
 ## Connecting to Nrec
 
@@ -35,7 +37,7 @@ Use the following parameters when creating the instance:
 - `Flavor/Size` -> select `c1.large`.
 - `Network` -> select `dual stack`.
 - `Security Groups` -> Keep the `default` network security group in the first place (you can add more later).
-- `Key Pair` -> create a key pair on you local machine with `ssh-keygen` and then upload the _public key_ with "Import Key Pair".
+- `Key Pair` -> create a key pair on your local machine with `ssh-keygen` and then upload the _public key_ with "Import Key Pair".
 - keep the remaining options as is and click on "Launch Instance".
 
 You may also want to read more on [SSH](https://docs.nrec.no/ssh.html) and [Network Security Groups](https://docs.nrec.no/security-groups.html).
@@ -46,7 +48,6 @@ Make sure that you add your public SSH certificates for the newly created users 
 the `~/.ssh/authorized_keys` file (where `~` refers to the home directory of the user, ususally `/home/<username>`.
 The home directory of the `root` user is `/root`).
 
-
 ## Serving static content 
 
 The Nrec virtual machine can be used a server to host whatever network service you might think of.
@@ -54,11 +55,13 @@ At the current stage, you probably do not have a running FireGuard system yet.
 Thus, one way to at least show "_something_" could be to host some static content, e.g a documentation landing page,
 which documents your system. This documentation could then grow throughout the project.
 
-The easiest way to get started with some documentation is by using _mkdocs.
+The easiest way to get started with some documentation is by using [_mkdocs_](https://www.mkdocs.org/).
 Follow [their getting started guide](https://www.mkdocs.org/getting-started/) to learn how to install it 
 and serve your first documentation.
 Are you able to serve this static documentation from you VM so that other can browse it too?
-Perhaps, you will have to update your network security rules.
+- Perhaps, you will have to update your network security rules? Do you know what ports to open?
+- Also, you may have to understand the difference between [0.0.0.0](https://en.wikipedia.org/wiki/0.0.0.0) and [127.0.0.1](https://en.wikipedia.org/wiki/Localhost)
+and run the `mkdocs serve --help` command once.
 
 ## Source code repositories
 
@@ -80,3 +83,11 @@ the [Understand GitHub Actions](https://docs.github.com/en/actions/get-started/u
 Afterwards, try to adjust their example workflow file such that it instead runs some unit tests on 
 one of your Python projects using the uv build tool.
 You may also want to check out what the [uv creators are saying about using uv in GitHub Actions](https://docs.astral.sh/uv/guides/integration/github/).
+
+**Bonus**: There are basically no limits how advanced you want to design your CI-pipelines. The bare minumum should be one _regression test_ step.
+Possible things you may want to try out:
+- using an existing [GitHub Action](https://github.com/marketplace/actions/publish-test-results) to publish test results 
+- using [pytest](https://docs.pytest.org/) to run your unit and integration tests in a more convenient way (possibly adding it as a ["dev dependency"](https://docs.astral.sh/uv/concepts/projects/dependencies/#development-dependencies)).
+- adding [test coverage](https://pytest-cov.readthedocs.io/) to your CI-pipeline,
+- adding a static analysis step to your CI-pipeline, e.g. a [linter](https://docs.astral.sh/ruff/),
+- adding some ![](https://img.shields.io/badge/build-passing-brightgreen)  eyecandy to your `README.md` with [shields](https://shields.io/).
