@@ -23,7 +23,7 @@ Infrastructure as a service is the most foundational of all the cloud service of
 It allows you to build other cloud service types yourself. 
 IaaS refers to basic virtual computing resources, i.e.
 
-- virtual CPUs and memory with a virtual network interface card (NIC) called **virtual machine**
+- virtual CPUs and memory with a virtual network interface card (NIC) called **virtual machine (VM)s**
 - virtual networks with firewall rules, represented by **virtual networks** and **security groups**
 - virtual hard drives (--> will be covered in week 10)
 
@@ -132,7 +132,7 @@ This means dedicating a non-root account for running FireGuard ant grant that ac
 
 
 ```bash
-sudo adduser fireguard
+sudo adduser --disabled-password --gecos "" fireguard
 sudo mkdir -p /home/fireguard/.ssh
 sudo chown -R fireguard:fireguard /home/fireguard/.ssh
 ```
@@ -140,7 +140,7 @@ sudo chown -R fireguard:fireguard /home/fireguard/.ssh
 Now, generate a new SSH key pair for automation (`ssh-keygen -t ed25519 -f deploy_key`) and place that public key under `/home/fireguard/.ssh/authorized_keys` on the VM by using `scp`.
 
 
-### Turn you CI-pipeline into CD-pipeline
+### Turn your CI-pipeline into CD-pipeline
 
 Finally, you have to add a pipeline step that connects with SSH to your VM and runs a deployment script. 
 Focus on repeatability: have the pipeline copy the latest artifact, install dependencies, update configuration, and restart the FireGuard service in a single script. 
@@ -153,16 +153,15 @@ Example GH Actions snippet:
 ```yaml
 steps:
 	# ... steps before
-	- name: Set up deploy key
-		run: |
-			mkdir -p ~/.ssh
-			echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
-			chmod 600 ~/.ssh/deploy_key
-        env:
-			DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-	- name: Run deployment
-		run: ssh fireguard@{IP} /home/fireguard/deploy.sh
-		
+ - name: Set up deploy key
+   run: |
+    mkdir -p ~/.ssh
+    echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+    chmod 600 ~/.ssh/deploy_key
+   env:
+     DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+ - name: Run deployment
+   run: ssh fireguard@{IP} /home/fireguard/deploy.sh
 ``` 
 
 
@@ -170,7 +169,7 @@ steps:
 
 You might as well use your virtual machine (IaaS) to run a platform (such as Docker) and use it to deploy your services (PaaS).
 Docker is just a presentative of container technology (you may also use podman if you prefer).
-It is installed under Ubuntu with 
+It is installed, in Ubuntu, with 
 
 ```bash
 sudo apt install docker.io
@@ -183,9 +182,24 @@ sudo docker system info
 
 ### Build and share a docker image
 
-Write a Dockerfile that installs only the runtime dependencies needed by FireGuard, copies the package from the GH Actions artifact or wheel, and exposes the service port. Prefer a multi-stage build so the final image only contains the light-weight runtime image (e.g., python:slim), and label the image with the Git SHA by passing build args from your pipeline. After building, push the image to a registry you control (Docker Hub, GitHub Container Registry, etc.) by authenticating in the workflow and tagging the image with both the branch name and a release version.
+In order to obtain a _container_ (i.e. an application packaged with all it's dependencies)
+you have to create the so-called _container **image**_.
+Images are built from a `Dockerfile`.
+Dockerfiles have their own [syntax](https://docs.docker.com/reference/dockerfile/).
+The latter being relatively easy to learn:
+A Dockerfile is a linear sequence of operations that shall be applied to yield 
+a file system snapshot that can host your application.
+The four most common contents are:
+- Exactly one `FROM` instruction in the beginning that selects a stable base image for building the application (e.g. `python:{version}-slim`),
+- one or more `COPY` instructions that copy files from you computer into the image,
+- one or more `RUN` instructions that exectute Linux commands within the file system of the container,
+- exactly one `CMD` instruction that specifies what command to run when the container (i.e. app) starts.
 
-Template Dockerfile:
+
+Optionally, you may configure the execution environment with `ENV`, `WORKDIR`, and `USER` instructions.
+
+The `Dockerfile` should be located at the "root" of your project, i.e. next to your `pyproject.toml`.
+An possible template for your FireGuard application could look like this:
 ```Dockerfile
 FROM python:3.13-slim
 RUN useradd --create-home fireguard
@@ -193,19 +207,67 @@ USER fireguard
 WORKDIR /home/fireguard
 COPY /dist .
 RUN pip install {package}
-EXPOSE 8000
 CMD ["entry-point"]
 ``` 
-.
+
+Once the `Dockerfile` is created, you can build an image with:
+```bash
+docker build -t {tag} .
+```
+
+Where `tag` is a symbolic name for the image such that you can find it again. 
+
+### Upload the image to a container registry
+
+Just like any other software artifact, also containers have to be stored somewhere in order for others (e.g. servers)
+to be able to retrieve them and run them eventually. 
+For container images, there are specialized _container registries_. 
+A popular public option is [Docker Hub](https://hub.docker.com/), which allows you to host as many public repositories
+as you like (plus one private one also), for free. 
+
+> [!NOTE]
+> The meaning of `repository` in the Docker context is different from the one in the context of `git` for example.
+> In docker, a repository is simply the name of one image (which can have multiple version tags).
+
+To upload your image to the container registry you will first have to create user on Docker Hub, then 
+create an access token in the user settings. This access token is needed to log in (using it as a password):
+
+```bash
+docker login
+```
+
+Then, create a new repository for the fireguard project on the Docker Hub web page. 
+Once the repository is created, you can push to it.
+To do this, you will have to `tag` your local images such that they correspond to the global public name of the image.
+The format being:
+
+```
+docker.io/{username}/{repositoryname}:{version}
+```
 
 ### Run the container on the VM
 
-On the VM, install Docker if necessary, pull the tagged image from the registry, and start it with a docker run command that maps the port, mounts the configuration directory, and injects secrets via environment variables or files. Use docker-compose or a simple systemd unit to keep the container running and restart it on failure. Always pull the hash you just pushed so the VM runs the exact image that your pipeline produced.
+Once, the container image is online in the container repository, running the apllication as a container 
+becomes very easy.
+
+```bash
+docker run --name fireguard -d {image}
+```
+
+will run the container in the abckground.
+You can stop the container with 
+
+```bash
+docker stop fireguard
+```
 
 ### Docker best practices
 
 
+- Never run your application with root priveleges inside the container.
 - Run your container as a non-root user, set appropriate resource limits (`--memory`, `--cpus`), and bind only the necessary ports.
+- Use a minimal slim image for executing the application (you can use "fat" builder images for creating the image, though).
+- Do security scanning of your container images to check if there are vulnerabilities in your dependencies. 
 
 
 ## FaaS
