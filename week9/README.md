@@ -7,7 +7,7 @@
 - Integrate keycloak API for consuming JWT auth/authz token
 - Configure keycloak as the 3rd party Identity Provider
 - Set up CI/CD environment
-- Test, test, test
+- Test
 
 ## Example project for Auth/Authz using JWT for FastAPI RESTAPI and Keycloak IdP 
 - To get started, visit and clone an example project at: https://github.com/tosdanoye/fastapi-keycloak-jwt
