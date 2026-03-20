@@ -156,5 +156,25 @@ spec:
              name: your-service # adjust
              port:
                number: 80 # adjust
+```
+
+Also make sure that all your resources are created in your group's namespace `groupNN`!
+
+
+If you need stateful services (like databases), you will have to create _persistent volume claim (PVC)_ like so:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: your-volume-name
+  namespace: groupNN
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-rbd
+  resources:
+    requests:
+      storage: 5Gi # please be considerate here, should be enough
 
 ```
