@@ -62,12 +62,17 @@ If you want to contribute to the cluster with the computing power of your virtua
 your are more than welcome to do so by running:
 
 ```bash
-microk8s join $IP:$PORT/$TOKEN
+microk8s join 158.39.75.244:25000/$TOKEN
 ```
 
-The IP, PORT, and TOKEN values will be provided by me during the workshop session on 2026-03-20.
+The value for `TOKEN`, you will get from me, if you want to try this out, please contact me via E-mail
+so we can arrange a session to peer the nodes :wink:
 
-Probably, some network security group rules have to be configured
+> [!IMPORTANT]
+> In order to make the clusters talk with each other, firewall excemptions must be put in place.
+> According to the [microk8s documentation](https://canonical.com/microk8s/docs/services-and-ports)
+> the nodes are talking to each other using port `25000`. Thus, make sure that access to this
+> port is allowed from IP `158.39.75.244`. (maybe also port `16443` needs to be open but we will see...)
 
 
 ### Access to the cluster 
@@ -92,7 +97,21 @@ openssl req -new -key username.key -out username.csr -subj "/CN=username"
 
 Important is that you chose a distinct name for the value of `CN` (common name).
 
-Download the `.csr` file and transfer it to me,
+Download the `.csr` file and transfer it to me.
+
+In particular, in order to get access to my cluster you **must provide** the following:
+
+- The `.csr` file containing the signing request using the correct username in the `CN`-field.
+- The name of your group, a.k.a. the name for your personal `namespace` in Kubernetes.
+- The IP from the virtual machine to access the cluster from (I would like to avoid having the Kubernetes API on the public internet and 
+create individual firewall rules for that.)
+
+In return, I will provide you with
+- The `ca.crt` ([_certificate authority_](https://en.wikipedia.org/wiki/Certificate_authority)) used to connect to the cluster 
+- The signed certificate (`.crt` file) used to authenticate yourself with the cluster 
+- The confirmed `namespace` name
+
+
 I will then sign the request and provide you with a `.crt` file plus the `ca.crt` file.
 Upload these files to your virtual machine, and then create the `~/.kube/config` as follows:
 
@@ -101,30 +120,33 @@ cat > ~/.kube/config <<EOF
 apiVersion: v1
 kind: Config
 clusters:
-- name: microk8s
+- name: microk8s-patrick
   cluster:
     certificate-authority-data: $(base64 -w 0 ./ca.crt)
     server: https://158.39.75.244:16443
 contexts:
-- name: test-nrec
+- name: patricks-nrec-cluster
   context:
-    cluster: microk8s
-    user: username
+    cluster: microk8s-patrick
+    user: $USERNAME
     namespace: $NAMESPACE
 current-context: test-nrec
 users:
-- name: username
+- name: $USERNAME
   user:
     client-certificate-data: $(base64 -w 0 ./username.crt)
     client-key-data: $(base64 -w 0 ./username.key)
 EOF
 ```
-I will provide you with the value for the `NAMESPACE`,
-you have to make sure that the certificate, and key files are present
-as well as the value for the username if consistent with what you chose in the `CN`
-when creating the CSR.
+Before running this comman, make sure that:
 
-Finally, you can thest the connection using 
+- You are inside your Nrec VM
+- Your current directory contains `username.crt`, `username.key` and `ca.crt` (otherwise you maye have to rename/move files around)
+- You have set the `USERNAME` env variable with a value that is consistent with the `CN`-field in the signing request (`export USERNAME=username`)
+- You hvae set the `NAMESPACE` env variable with your group's name (`export NAMESPACE=groupNN`)
+
+
+Finally, you can test the connection using 
 ```bash
 kubectl get nodes
 ```
@@ -178,3 +200,9 @@ spec:
       storage: 5Gi # please be considerate here, should be enough
 
 ```
+
+> [!TIP]
+> During the live demo on Zoom, I did not manage make the data in the PostgreSQL container persistent.
+> This was due to using the wrong path! If I would have read the [container documentation](https://hub.docker.com/_/postgres#pgdata)
+> correctly, I would have avoided the problem. It clearly states: "Important Note: (for PostgreSQL 17 and below) Mount the data volume at /var/lib/postgresql/data and not at /var/lib/postgresql because mounts at the latter path WILL NOT PERSIST "
+> Thus, make sure to ALWAYS read the documentation of the container image properly to familiarize yourself **where** the mount points inside the container are!
