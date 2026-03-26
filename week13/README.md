@@ -22,7 +22,7 @@
 ## Task 3 (Dynamic Analysis - DAST)
 - Download, install, and configure [OWASP ZAP](https://www.zaproxy.org/download/)
 - Start ZAP 
-- In the Quick Start page, select 'Automated Scan' and point your URL to http://localhost:8080
+- In the Quick Start page, select 'Automated Scan' and point your URL to http://localhost:9095
 - Select 'use traditional spider' and press 'Attack'
 - When the analysis is finished, click 'Alerts' and browse through the found issues.
 - Discuss the listed vulnerabilities and their implications 
