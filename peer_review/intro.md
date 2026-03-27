@@ -18,28 +18,28 @@ But feel free to add additional aspects and topics that you would like to give f
 
 ## Review Checklist
 
-### Source Code Management
+### General Architecture
 
-- [ ] Are all components of the fire risk system under version control?
-- [ ] What repository layout is used: Mono- or Poly-repo?
-    - [ ] for poly-repo: is there an overarching document (e.g. Readme) that describes how the repositories belong together? other means such as `git submodules`? 
-    - [ ] for mono-repo: is the internal repository structure well-documented?
-- [ ] What workflow is used in the repo? Trunk-based vs. Github-flow vs. Git-flow? Does commit-messages refer to feature/bug-tickets? Are tags or branches used to idenity features or stable versions?
+- [ ] What is the general architecture of the application? Monolith vs. Microservices vs. something in-betwen? What are the central _components_
+of the application? What are their roles? How do they interact and communicate?
+- [ ] Are all the components developed by the group itself under version control? Are they in the same repository or spread across multiple repositories (if so: is there documentation where to find everything)?
+- [ ] What workflow is used in the repo/project? Trunk-based vs. Github-flow vs. Git-flow? Do commit-messages refer to features/bug-tickets? Are tags or branches used to idenity features or stable versions?
+- [ ] Is there a backlog or statement stating what features are working what is currently missing?
 
 ### Continuous Integration and Deployment
 
-- [ ] Are there test cases for the most central functionality?
-- [ ] Are there CI-pipelines for each component that run the tests automatically?
-- [ ] Are there Dockerfiles for each component that create container images?
-- [ ] Do the CI-pipelines contain a step for building the Docker image and additionally pushing it to a container registry?
+- [ ] Are there test cases for the most central functionality? What type of tests are run (unit tests, integration tests, end-to-end tests)? Are there any additional static analysis checks?
+- [ ] Are there CI-pipelines for each component or the whole application that run the automatically? When do they run (on push, on pull request, on schedule)?
+- [ ] Are there Dockerfiles for each component or the whole application that create container images to package the application? If the group is using some form of SaaS/PaaS (like supabase/firebase): how does the deployment process work?
+- [ ] Is the appliation reachable on the web? IP address? Is there TLS a.k.a. https
 
 ### Functionality 
 
 - [ ] Does the system comprise a component to automatically fetch weather data from MET?
 - [ ] Does the system offer a REST API for retrieving the fire risk at a given location?
-- [ ] Does the system comprise the fire risk model from the `frcm` project?
+- [ ] Does the system comprise all call to the fire risk model `frcm`?
 - [ ] Is there functionality that automatically observes the fire risk at given location (i.e. fetches wather data in the background and updates the fire risk continuously)?
-- [ ] Perform a system test of all components together: i.e. "Does it work?"
+- [ ] Perform a system test of all components together: Does it work? What is missing?
 
 ### Non-functional requirements
 
